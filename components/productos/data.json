@@ -76,7 +76,7 @@
       {
         "titulo": "Troquelado",
         "slug": "troquelado",
-        "categoria":"Servicio de Troquelado y embutido",
+        "categoria":"Servicio de Troquelado y Embutido",
         "precio":20000,
           "images": ["/static/images/productos/marmita_abierta.png"],
           "copy": "marmita ipsum dolor sit amet, consectetur adipiscing elit. Morbi accumsan est ornare, ultricies erat a, dapibus lectus."
@@ -85,7 +85,7 @@
       {
         "titulo": "Embutido",
         "slug": "embutido",
-        "categoria":"Servicio de Troquelado y embutido",
+        "categoria":"Servicio de Troquelado y Embutido",
         "precio":20000,
           "images": ["/static/images/productos/marmita_abierta.png"],
           "copy": "marmita ipsum dolor sit amet, consectetur adipiscing elit. Morbi accumsan est ornare, ultricies erat a, dapibus lectus."
