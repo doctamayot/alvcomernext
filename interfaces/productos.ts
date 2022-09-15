@@ -1,4 +1,5 @@
 export interface IProducto {
+  _id: string;
   copy: string;
   images: string[];
   precio: number;

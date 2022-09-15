@@ -17,7 +17,7 @@ export const Slider: FC<Props> = ({ activeIndex, productos }) => {
           sx={{
             display: "flex",
             alignItems: "flex-end",
-            justifyContent: "flex-end",
+            justifyContent: "center",
             marginRight: "20px",
             marginTop: "400px",
           }}
@@ -25,8 +25,8 @@ export const Slider: FC<Props> = ({ activeIndex, productos }) => {
           <Image
             src={productos[activeIndex].images[0]}
             alt={productos[activeIndex].copy}
-            width={250}
-            height={250}
+            width={400}
+            height={400}
           />
         </Box>
       </section>

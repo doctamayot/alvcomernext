@@ -1,9 +1,11 @@
 //React
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+
 //Next
 import { useRouter } from "next/router";
 import Image from "next/image";
 import NextLink from "next/link";
+import { useSession, signOut } from "next-auth/react";
 
 //MUI
 import {
@@ -11,20 +13,32 @@ import {
   Box,
   Button,
   IconButton,
+  Input,
+  InputAdornment,
   Link,
+  ListItem,
   Menu,
   MenuItem,
   Toolbar,
   Typography,
 } from "@mui/material";
 
-import { Person, Widgets } from "@mui/icons-material";
+import {
+  ClearOutlined,
+  ExitToApp,
+  Person,
+  SearchOutlined,
+  Widgets,
+} from "@mui/icons-material";
 
 //App
 import logo from "../../public/static/images/logo.png";
+import { UiContext } from "../../context";
 
 export const Navbar = () => {
   const { asPath, push } = useRouter();
+  const { toggleSideMenu } = useContext(UiContext);
+  const [searchTerm, setSearchTerm] = useState("");
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -35,10 +49,17 @@ export const Navbar = () => {
     setAnchorEl(null);
   };
 
+  const { data: session } = useSession();
+
+  const onSearchTerm = () => {
+    if (searchTerm.trim().length === 0) return;
+    push(`/search/${searchTerm}`);
+  };
+
   return (
     <AppBar
       sx={{
-        height: 80,
+        height: 90,
         fontSize: "16.2px",
         background: "rgba(0, 0, 0, 0.5)",
       }}
@@ -49,7 +70,7 @@ export const Navbar = () => {
             <Image
               src={logo}
               width={100}
-              height={70}
+              height={80}
               alt="Alvcomer SAS Productos Militares"
             />
           </Link>
@@ -84,12 +105,18 @@ export const Navbar = () => {
             onClick={handleClick}
             sx={{
               backgroundColor: "transparent",
-              color: "#fff",
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: "16.2px",
             }}
           >
-            Productos
+            <Typography
+              sx={{
+                backgroundColor: "transparent",
+                color: "#fff",
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: "16.2px",
+              }}
+            >
+              Productos
+            </Typography>
           </Button>
           <Menu
             id="basic-menu"
@@ -104,37 +131,113 @@ export const Navbar = () => {
               sx={{ fontFamily: "Montserrat, sans-serif" }}
               onClick={handleClose}
             >
-              Equipo Militar o Camping
+              <NextLink href="/productos/categoria/todas" passHref>
+                <Typography
+                  sx={{
+                    backgroundColor: "transparent",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "16.2px",
+                  }}
+                >
+                  Todos
+                </Typography>
+              </NextLink>
             </MenuItem>
             <MenuItem
               sx={{ fontFamily: "Montserrat, sans-serif" }}
               onClick={handleClose}
             >
-              Herrajes
+              <NextLink href="/productos/categoria/militares" passHref>
+                <Typography
+                  sx={{
+                    backgroundColor: "transparent",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "16.2px",
+                  }}
+                >
+                  Equipo Militar o Camping
+                </Typography>
+              </NextLink>
             </MenuItem>
             <MenuItem
               sx={{ fontFamily: "Montserrat, sans-serif" }}
               onClick={handleClose}
             >
-              Institucional
+              <NextLink href="/productos/categoria/herrajes" passHref>
+                <Typography
+                  sx={{
+                    backgroundColor: "transparent",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "16.2px",
+                  }}
+                >
+                  Herrajes
+                </Typography>
+              </NextLink>
             </MenuItem>
             <MenuItem
               sx={{ fontFamily: "Montserrat, sans-serif" }}
               onClick={handleClose}
             >
-              Vallas de Contención
+              <NextLink href="/productos/categoria/inst" passHref>
+                <Typography
+                  sx={{
+                    backgroundColor: "transparent",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "16.2px",
+                  }}
+                >
+                  Institucional
+                </Typography>
+              </NextLink>
             </MenuItem>
             <MenuItem
               sx={{ fontFamily: "Montserrat, sans-serif" }}
               onClick={handleClose}
             >
-              Servicio de Troquelado y embutido
+              <NextLink href="/productos/categoria/vallas" passHref>
+                <Typography
+                  sx={{
+                    backgroundColor: "transparent",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "16.2px",
+                  }}
+                >
+                  Vallas de Contención
+                </Typography>
+              </NextLink>
             </MenuItem>
             <MenuItem
               sx={{ fontFamily: "Montserrat, sans-serif" }}
               onClick={handleClose}
             >
-              Placas de Identificación
+              <NextLink href="/productos/categoria/servicios" passHref>
+                <Typography
+                  sx={{
+                    backgroundColor: "transparent",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "16.2px",
+                  }}
+                >
+                  Servicio de Troquelado y embutido
+                </Typography>
+              </NextLink>
+            </MenuItem>
+            <MenuItem
+              sx={{ fontFamily: "Montserrat, sans-serif" }}
+              onClick={handleClose}
+            >
+              <NextLink href="/productos/categoria/placas" passHref>
+                <Typography
+                  sx={{
+                    backgroundColor: "transparent",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "16.2px",
+                  }}
+                >
+                  Placas de Identificación
+                </Typography>
+              </NextLink>
             </MenuItem>
           </Menu>
 
@@ -169,30 +272,89 @@ export const Navbar = () => {
 
         <Box flex={1} />
 
-        <NextLink href="/auth/login" passHref>
-          <Link
+        {isSearchVisible ? (
+          <Input
+            sx={{
+              display: { xs: "none", sm: "flex" },
+              color: "#FFF",
+              borderBottom: "0.5px solid #fff",
+            }}
+            className="fadeIn"
+            autoFocus
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyPress={(e) => (e.key === "Enter" ? onSearchTerm() : null)}
+            type="text"
+            disableUnderline={true}
+            placeholder="Buscar..."
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton onClick={() => setIsSearchVisible(false)}>
+                  <ClearOutlined sx={{ color: "#FFF" }} />
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        ) : (
+          <IconButton
+            onClick={() => setIsSearchVisible(true)}
+            className="fadeIn"
+            sx={{ display: { xs: "none", sm: "flex" }, color: "#FFF" }}
+          >
+            <SearchOutlined />
+          </IconButton>
+        )}
+
+        {session ? (
+          <Box
+            onClick={() => signOut()}
             sx={{ display: { xs: "none", md: "flex" } }}
             alignItems="center"
           >
-            <Box>
-              <IconButton sx={{ display: { xs: "flex" }, color: "#fff" }}>
-                <Person />
-              </IconButton>
-            </Box>
-            <Typography
-              sx={{
-                marginRight: "20px",
-                fontSize: "1em",
-                color: "#fff",
-                fontFamily: "Montserrat, sans-serif",
-              }}
+            <IconButton sx={{ display: { xs: "flex" }, color: "#fff" }}>
+              <ExitToApp sx={{ marginRight: "10px" }} />
+              <Typography
+                sx={{
+                  marginRight: "20px",
+                  fontSize: "0.8em",
+                  color: "#fff",
+                  fontFamily: "Montserrat, sans-serif",
+                }}
+              >
+                Logout
+              </Typography>
+            </IconButton>
+          </Box>
+        ) : (
+          <NextLink href="/auth/login" passHref>
+            <Link
+              sx={{ display: { xs: "none", md: "flex" } }}
+              alignItems="center"
             >
-              Login
-            </Typography>
-          </Link>
-        </NextLink>
+              <Box>
+                <IconButton sx={{ display: { xs: "flex" }, color: "#fff" }}>
+                  <Person />
+                </IconButton>
+              </Box>
+              <Typography
+                sx={{
+                  marginRight: "20px",
+                  fontSize: "1em",
+                  color: "#fff",
+                  fontFamily: "Montserrat, sans-serif",
+                }}
+              >
+                Login
+              </Typography>
+            </Link>
+          </NextLink>
+        )}
 
-        <Button variant="text" sx={{ fontSize: "16.2px" }}>
+        <Button
+          onClick={toggleSideMenu}
+          variant="text"
+          sx={{ fontSize: "16.2px" }}
+        >
           <Widgets />
         </Button>
       </Toolbar>

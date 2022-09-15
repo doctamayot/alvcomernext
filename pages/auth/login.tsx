@@ -1,5 +1,7 @@
 //Next
 import NextLink from "next/link";
+import { GetServerSideProps, NextPage } from "next";
+import { getProviders, signIn, getSession } from "next-auth/react";
 //MUI
 import {
   Box,
@@ -14,27 +16,20 @@ import {
 //App
 import { AuthLayout } from "../../components/layouts";
 
-const LoginPage = () => {
+interface Props {
+  providers: any;
+}
+
+const LoginPage: NextPage<Props> = ({ providers }) => {
+  console.log(providers);
   return (
     <AuthLayout title={"Ingresar"}>
       <Box sx={{ width: 350, padding: "10px 20px" }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h1" component="h1">
-              Iniciar Sesión
+              Iniciar Sesión con {providers.google.name}
             </Typography>
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField type="email" label="Correo" variant="filled" fullWidth />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Contraseña"
-              type="password"
-              variant="filled"
-              fullWidth
-            />
           </Grid>
 
           <Grid item xs={12}>
@@ -44,30 +39,43 @@ const LoginPage = () => {
               className="circular-btn"
               size="large"
               fullWidth
+              onClick={() => signIn(providers.google.id)}
             >
               Ingresar
             </Button>
-          </Grid>
-
-          <Grid item xs={12} display="flex" justifyContent="end">
-            <NextLink href="/auth/registro" passHref>
-              <Link underline="always">¿No tienes cuenta?</Link>
-            </NextLink>
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-            display="flex"
-            flexDirection="column"
-            justifyContent="end"
-          >
-            <Divider sx={{ width: "100%", mb: 2 }} />
           </Grid>
         </Grid>
       </Box>
     </AuthLayout>
   );
+};
+
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  query,
+}) => {
+  const providers = await getProviders(); // your fetch function here
+  const session = await getSession({ req });
+
+  const { p = "/" } = query;
+
+  if (session) {
+    return {
+      redirect: {
+        destination: p.toString(),
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      providers,
+    },
+  };
 };
 
 export default LoginPage;

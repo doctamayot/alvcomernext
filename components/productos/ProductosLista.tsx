@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
+import NextLink from "next/link";
 import { Slider } from "./Slider";
-import data from "./data.json";
 import cn from "classnames";
 import {
   AcUnit,
@@ -10,11 +10,18 @@ import {
   ArrowForward,
 } from "@mui/icons-material";
 
-export const Productos = () => {
+import { IProducto } from "../../interfaces/productos";
+
+interface Props {
+  products: IProducto[];
+  titulo: string;
+}
+
+export const ProductosLista: FC<Props> = ({ products, titulo }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   // Used to determine which items appear above the active item
-  const halfwayIndex = Math.ceil(data.productos.length / 2);
+  const halfwayIndex = Math.ceil(products.length / 2);
 
   // Usd to determine the height/spacing of each item
   const itemHeight = 52;
@@ -33,7 +40,7 @@ export const Productos = () => {
       if (activeIndex > itemIndex - halfwayIndex) {
         return (itemIndex - activeIndex) * itemHeight;
       } else {
-        return -(data.productos.length + activeIndex - itemIndex) * itemHeight;
+        return -(products.length + activeIndex - itemIndex) * itemHeight;
       }
     }
 
@@ -43,7 +50,7 @@ export const Productos = () => {
 
     if (itemIndex < activeIndex) {
       if ((activeIndex - itemIndex) * itemHeight >= shuffleThreshold) {
-        return (data.productos.length - (activeIndex - itemIndex)) * itemHeight;
+        return (products.length - (activeIndex - itemIndex)) * itemHeight;
       }
       return -(activeIndex - itemIndex) * itemHeight;
     }
@@ -52,14 +59,14 @@ export const Productos = () => {
   const handleClick = (direction: any) => {
     setActiveIndex((prevIndex) => {
       if (direction === "next") {
-        if (prevIndex + 1 > data.productos.length - 1) {
+        if (prevIndex + 1 > products.length - 1) {
           return 0;
         }
         return prevIndex + 1;
       }
 
       if (prevIndex - 1 < 0) {
-        return data.productos.length - 1;
+        return products.length - 1;
       }
 
       return prevIndex - 1;
@@ -76,7 +83,7 @@ export const Productos = () => {
     >
       <Grid
         item
-        xs={3}
+        xs={4}
         sx={{
           margin: "120px 20px",
           display: "flex",
@@ -89,26 +96,27 @@ export const Productos = () => {
             width: "90%",
           }}
         >
-          <Typography
+          {/* <Typography
             variant="h2"
             sx={{
               fontFamily: "Montserrat, sans-serif",
-              fontSize: "54px",
+              fontSize: "50px",
               fontWeight: "100",
             }}
           >
-            Acero
-          </Typography>
+            Categoria
+          </Typography> */}
           <Typography
             sx={{
               fontFamily: "Montserrat, sans-serif",
-              fontSize: "70px",
+              fontSize: "40px",
               fontWeight: "bolder",
               color: "#fff",
-              marginTop: "-20px",
+
+              lineHeight: "70px",
             }}
           >
-            Inoxidable
+            {titulo}
           </Typography>
           <Typography
             sx={{
@@ -136,7 +144,7 @@ export const Productos = () => {
                 <div className="carousel">
                   <div className="slides">
                     <div className="carousel-inner">
-                      {data.productos.map((item: any, i: any) => (
+                      {products.map((item: any, i: any) => (
                         <button
                           key={i}
                           type="button"
@@ -186,7 +194,7 @@ export const Productos = () => {
         </Box>
       </Grid>
       <Grid item xs={3} sx={{ marginTop: "0px", marginLeft: "-120px" }}>
-        <Slider activeIndex={activeIndex} productos={data.productos} />
+        <Slider activeIndex={activeIndex} productos={products} />
       </Grid>
       <Grid item xs={3} sx={{ marginTop: "400px" }}>
         <Typography
@@ -197,7 +205,7 @@ export const Productos = () => {
             fontSize: "60px",
           }}
         >
-          {data.productos[activeIndex].titulo}
+          {products[activeIndex].titulo}
         </Typography>
         <Typography
           variant="h6"
@@ -207,19 +215,25 @@ export const Productos = () => {
             fontSize: "20px",
           }}
         >
-          {data.productos[activeIndex].copy}
+          {products[activeIndex].copy}
         </Typography>
-        <Button
-          endIcon={<ArrowForward />}
-          sx={{
-            backgroundColor: "#000",
-            color: "#fff",
-            marginTop: "30px",
-            width: "300px",
-          }}
+        <NextLink
+          href={`/productos/${products[activeIndex].slug}`}
+          passHref
+          prefetch={false}
         >
-          Ver más
-        </Button>
+          <Button
+            endIcon={<ArrowForward />}
+            sx={{
+              backgroundColor: "#000",
+              color: "#fff",
+              marginTop: "30px",
+              width: "300px",
+            }}
+          >
+            Ver más
+          </Button>
+        </NextLink>
       </Grid>
     </Grid>
   );

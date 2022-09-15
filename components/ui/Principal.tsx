@@ -19,10 +19,10 @@ const fondos = [
   { url: "/static/images/fondo3.jpg" },
 ];
 
-const mapea = () => {
-  fondos.map((i) => console.log(i.url));
-};
-mapea();
+// const mapea = () => {
+//   fondos.map((i) => console.log(i.url));
+// };
+// mapea();
 export const Principal = () => {
   return (
     <>
