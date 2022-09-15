@@ -139,8 +139,8 @@ const PartsTable: FC<Props> = ({ product, part, idver }) => {
     }
 
     try {
-      console.log(target.files);
-      for (const file of target.files) {
+      //console.log(target.files);
+      for (const file of target.files as any) {
         const formData = new FormData();
         formData.append("file", file);
         const { data } = await tesloApi.post<{ message: string }>(
