@@ -51,7 +51,7 @@ const columns: GridColDef[] = [
   {
     field: "img",
     headerName: "Foto",
-    renderCell: ({ row }: GridValueGetterParams) => {
+    renderCell: ({ row }: any) => {
       return (
         <a
           href={`/admin/invproducts/${row.id}`}
@@ -73,7 +73,7 @@ const columns: GridColDef[] = [
     field: "title",
     headerName: "Titulo",
     width: 300,
-    renderCell: ({ row }: GridValueGetterParams) => {
+    renderCell: ({ row }: any) => {
       return (
         <NextLink href={`/admin/invproducts/${row.id}`} passHref>
           <Link underline="always">{row.title}</Link>
