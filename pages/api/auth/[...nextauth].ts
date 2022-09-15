@@ -91,7 +91,7 @@ export default NextAuth({
       }
       return true;
     },
-    async session(session: Session, token: any) {
+    async session(session: Session, token: any): Promise<any> {
       console.log(session);
       return session;
     },
