@@ -49,7 +49,7 @@ const columns: GridColDef[] = [
   {
     field: "img",
     headerName: "Foto",
-    renderCell: ({ row }: GridValueGetterParams) => {
+    renderCell: ({ row }: any) => {
       return (
         <div
         //   href={`/admin/invproducts/${row.id}`}

@@ -82,7 +82,7 @@ export default NextAuth({
     signIn: "/auth/signin",
   },
 
-  secret: process.env.SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
 
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
