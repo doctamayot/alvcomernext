@@ -15,22 +15,34 @@ import {
 } from "@mui/material";
 //App
 import { AuthLayout } from "../../components/layouts";
+import { useEffect, useState } from "react";
 
 interface Props {
   providers: any;
 }
 
-const LoginPage: NextPage<Props> = ({ providers }) => {
-  //console.log(providers);
+const LoginPage: NextPage<Props> = () => {
+  const [providers, setProviders] = useState<any>({});
+
+  useEffect(() => {
+    getProviders().then((prov) => {
+      // console.log({prov});
+      setProviders(prov);
+    });
+  }, []);
   return (
     <AuthLayout title={"Ingresar"}>
       <Box sx={{ width: 350, padding: "10px 20px" }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography variant="h1" component="h1">
-              Iniciar Sesión con
-              {providers && providers.google && providers.google.name}
-            </Typography>
+            {Object.values(providers).map((provider: any) => (
+              <Button key={provider.id}>
+                <Typography variant="h1" component="h1">
+                  Iniciar Sesión con
+                  {/* {providers && providers.google && providers.google.name} */}
+                </Typography>
+              </Button>
+            ))}
           </Grid>
 
           <Grid item xs={12}>
@@ -74,9 +86,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   return {
-    props: {
-      providers,
-    },
+    props: {},
   };
 };
 

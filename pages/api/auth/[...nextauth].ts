@@ -132,7 +132,7 @@ export default NextAuth({
     strategy: "jwt",
     updateAge: 86400, // cada día
   },
-
+  secret: process.env.NEXTAUTH_PUBLIC_SECRET,
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       if (!user?.role) {
@@ -157,13 +157,8 @@ export default NextAuth({
     // },
     async session({ session, token, user }: any) {
       session.user.role = "Client";
-      return Promise.resolve(session);
+      return session;
     },
   },
   adapter: MongoDBAdapter(clientPromise),
-
-  jwt: {
-    secret: process.env.NEXTAUTH_JWT_SECRET,
-  },
-  secret: process.env.NEXTAUTH_PUBLIC_SECRET,
 });
