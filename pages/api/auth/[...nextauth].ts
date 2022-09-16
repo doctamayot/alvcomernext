@@ -149,9 +149,11 @@ export default NextAuth({
     },
 
     async jwt(
-      token: any,
-
-      account: any
+      token: JWT,
+      user?: User | undefined,
+      account?: Account | undefined,
+      profile?: Profile | undefined,
+      isNewUser?: boolean | undefined
     ) {
       if (account?.accessToken) {
         token.accessToken = account.accessToken;
