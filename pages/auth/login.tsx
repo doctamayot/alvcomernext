@@ -21,14 +21,15 @@ interface Props {
 }
 
 const LoginPage: NextPage<Props> = ({ providers }) => {
-  console.log(providers);
+  //console.log(providers);
   return (
     <AuthLayout title={"Ingresar"}>
       <Box sx={{ width: 350, padding: "10px 20px" }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h1" component="h1">
-              Iniciar Sesión con {providers.google.name}
+              Iniciar Sesión con
+              {providers && providers.google && providers.google.name}
             </Typography>
           </Grid>
 
@@ -59,13 +60,14 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const providers = await getProviders(); // your fetch function here
   const session = await getSession({ req });
+  console.log(session);
 
   const { p = "/" } = query;
 
   if (session) {
     return {
       redirect: {
-        destination: p.toString(),
+        destination: "/",
         permanent: false,
       },
     };
