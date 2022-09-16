@@ -132,7 +132,7 @@ export default NextAuth({
     strategy: "jwt",
     updateAge: 86400, // cada día
   },
-  secret: process.env.NEXTAUTH_PUBLIC_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       if (!user?.role) {
