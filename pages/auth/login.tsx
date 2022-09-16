@@ -39,7 +39,7 @@ const LoginPage: NextPage<Props> = () => {
               <Button key={provider.id}>
                 <Typography variant="h1" component="h1">
                   Iniciar Sesión con
-                  {/* {providers && providers.google && providers.google.name} */}
+                  {provider.name}
                 </Typography>
               </Button>
             ))}
@@ -70,16 +70,15 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
   query,
 }) => {
-  const providers = await getProviders(); // your fetch function here
   const session = await getSession({ req });
-  console.log(session);
+  // console.log({session});
 
-  //const { p = "/" } = query;
+  const { p = "/" } = query;
 
   if (session) {
     return {
       redirect: {
-        destination: "/",
+        destination: p.toString(),
         permanent: false,
       },
     };
