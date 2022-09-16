@@ -149,9 +149,9 @@ export default NextAuth({
     },
 
     async jwt(
-      token: JWT,
+      token: any,
 
-      account: Account
+      account: any
     ) {
       if (account?.accessToken) {
         token.accessToken = account.accessToken;
