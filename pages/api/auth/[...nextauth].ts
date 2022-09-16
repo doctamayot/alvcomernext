@@ -141,25 +141,23 @@ export default NextAuth({
       return true;
     },
 
-    async session({ session, token }: any) {
-      if (token?.accessToken) {
-        session.accessToken = token.accessToken;
-      }
+    // async jwt(
+    //   token: JWT,
+    //   user?: User | undefined,
+    //   account?: Account | undefined,
+    //   profile?: Profile | undefined,
+    //   isNewUser?: boolean | undefined
+    // ) {
+    //   console.log(token.user);
+    //   if (account) {
+    //     token.accessToken = account.access_token;
+    //   }
+
+    //   return token;
+    // },
+    async session({ session, token, user }: any) {
+      session.user.role = "Client";
       return session;
-    },
-
-    async jwt(
-      token: JWT,
-      user?: User | undefined,
-      account?: Account | undefined,
-      profile?: Profile | undefined,
-      isNewUser?: boolean | undefined
-    ) {
-      if (account?.accessToken) {
-        token.accessToken = account.accessToken;
-      }
-
-      return token;
     },
   },
   adapter: MongoDBAdapter(clientPromise),
