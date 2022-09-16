@@ -21,15 +21,7 @@ interface Props {
   providers: any;
 }
 
-const LoginPage: NextPage<Props> = () => {
-  const [providers, setProviders] = useState<any>({});
-
-  useEffect(() => {
-    getProviders().then((prov) => {
-      // console.log({prov});
-      setProviders(prov);
-    });
-  }, []);
+const LoginPage: NextPage<Props> = ({ providers }) => {
   return (
     <AuthLayout title={"Ingresar"}>
       <Box sx={{ width: 350, padding: "10px 20px" }}>
@@ -70,22 +62,24 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
   query,
 }) => {
+  const providers = await getProviders(); // your fetch function here
   const session = await getSession({ req });
-  // console.log({session});
 
-  const { p = "/" } = query;
+  //const { p = "/" } = query;
 
   if (session) {
     return {
       redirect: {
-        destination: p.toString(),
+        destination: "/",
         permanent: false,
       },
     };
   }
 
   return {
-    props: {},
+    props: {
+      providers,
+    },
   };
 };
 
