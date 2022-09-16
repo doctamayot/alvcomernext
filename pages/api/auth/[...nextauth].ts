@@ -157,7 +157,7 @@ export default NextAuth({
     // },
     async session({ session, token, user }: any) {
       session.user.role = "Client";
-      return session;
+      return Promise.resolve(session);
     },
   },
   adapter: MongoDBAdapter(clientPromise),
