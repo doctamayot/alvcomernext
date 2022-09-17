@@ -18,23 +18,30 @@ import { AuthLayout } from "../../components/layouts";
 import { useEffect, useState } from "react";
 
 interface Props {
-  providers: any;
+  google: any;
 }
 
-const LoginPage: NextPage<Props> = ({ providers }) => {
+const LoginPage: NextPage<Props> = () => {
+  const [prov, setProv] = useState<any>({});
+
+  useEffect(() => {
+    (async () => {
+      const providers = await getProviders();
+      setProv(providers as any);
+    })();
+  }, []);
+
   return (
     <AuthLayout title={"Ingresar"}>
       <Box sx={{ width: 350, padding: "10px 20px" }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            {Object.values(providers).map((provider: any) => (
-              <Button key={provider.id}>
-                <Typography variant="h1" component="h1">
-                  Iniciar Sesión con
-                  {provider.name}
-                </Typography>
-              </Button>
-            ))}
+            <Button>
+              <Typography variant="h1" component="h1">
+                Iniciar Sesión con{" "}
+                {prov && prov.google && (prov.google.name as any)}
+              </Typography>
+            </Button>
           </Grid>
 
           <Grid item xs={12}>
@@ -44,7 +51,7 @@ const LoginPage: NextPage<Props> = ({ providers }) => {
               className="circular-btn"
               size="large"
               fullWidth
-              onClick={() => signIn(providers.google.id)}
+              onClick={() => signIn(prov.google.id)}
             >
               Ingresar
             </Button>
@@ -62,7 +69,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
   query,
 }) => {
-  const providers = await getProviders(); // your fetch function here
+  // const providers = await getProviders(); // your fetch function here
   const session = await getSession({ req });
 
   //const { p = "/" } = query;
@@ -77,9 +84,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   return {
-    props: {
-      providers,
-    },
+    props: {},
   };
 };
 

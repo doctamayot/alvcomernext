@@ -40,9 +40,9 @@ export const MenuLateral = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data: session }: any = useSession();
+  const { data: session, status }: any = useSession();
 
-  console.log(session);
+  console.log(status);
 
   const onSearchTerm = () => {
     if (searchTerm.trim().length === 0) return;
