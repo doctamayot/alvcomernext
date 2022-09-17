@@ -127,38 +127,24 @@ export default NextAuth({
     signIn: "/auth/login",
   },
 
-  session: {
-    maxAge: 2592000, /// 30d
-    strategy: "jwt",
-    updateAge: 86400, // cada día
-  },
+  // session: {
+  //   maxAge: 2592000, /// 30d
+  //   strategy: "jwt",
+  //   updateAge: 86400, // cada día
+  // },
   secret: process.env.NEXTAUTH_SECRET,
-  callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      if (!user?.role) {
-        user.role = "Client";
-      }
-      return true;
-    },
+  // callbacks: {
+  //   async signIn({ user, account, profile, email, credentials }) {
+  //     if (!user?.role) {
+  //       user.role = "Client";
+  //     }
+  //     return true;
+  //   },
 
-    // async jwt(
-    //   token: JWT,
-    //   user?: User | undefined,
-    //   account?: Account | undefined,
-    //   profile?: Profile | undefined,
-    //   isNewUser?: boolean | undefined
-    // ) {
-    //   console.log(token.user);
-    //   if (account) {
-    //     token.accessToken = account.access_token;
-    //   }
-
-    //   return token;
-    // },
-    async session({ session, token, user }: any) {
-      session.user.role = "Client";
-      return session;
-    },
-  },
+  //   async session({ session, token, user }: any) {
+  //     session.user.role = "Client";
+  //     return session;
+  //   },
+  // },
   adapter: MongoDBAdapter(clientPromise),
 });
