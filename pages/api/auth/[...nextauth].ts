@@ -123,9 +123,9 @@ export default NextAuth({
     // ...add more providers here
   ],
 
-  pages: {
-    signIn: "/auth/login",
-  },
+  // pages: {
+  //   signIn: "/auth/login",
+  // },
 
   // session: {
   //   maxAge: 2592000, /// 30d

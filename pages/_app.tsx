@@ -11,7 +11,7 @@ import { UiProvider } from "../context";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <SessionProvider session={pageProps.session}>
+    <SessionProvider session={session}>
       <SWRConfig
         value={{
           // refreshInterval:500,
