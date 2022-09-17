@@ -51,7 +51,7 @@ const LoginPage: NextPage<Props> = () => {
               className="circular-btn"
               size="large"
               fullWidth
-              onClick={() => signIn(prov.google.id)}
+              onClick={() => signIn(prov.google.id, { callbackUrl: "/" })}
             >
               Ingresar
             </Button>
@@ -65,27 +65,27 @@ const LoginPage: NextPage<Props> = () => {
 // You should use getServerSideProps when:
 // - Only if you need to pre-render a page whose data must be fetched at request time
 
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-  query,
-}) => {
-  // const providers = await getProviders(); // your fetch function here
-  const session = await getSession({ req });
+// export const getServerSideProps: GetServerSideProps = async ({
+//   req,
+//   query,
+// }) => {
+//   // const providers = await getProviders(); // your fetch function here
+//   const session = await getSession({ req });
 
-  //const { p = "/" } = query;
+//   //const { p = "/" } = query;
 
-  if (session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+//   if (session) {
+//     return {
+//       redirect: {
+//         destination: "/",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {},
-  };
-};
+//   return {
+//     props: {},
+//   };
+//};
 
 export default LoginPage;

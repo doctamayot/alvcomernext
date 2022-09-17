@@ -123,16 +123,16 @@ export default NextAuth({
     // ...add more providers here
   ],
 
-  // pages: {
-  //   signIn: "/auth/login",
-  // },
+  pages: {
+    signIn: "/auth/signin",
+  },
 
   // session: {
   //   maxAge: 2592000, /// 30d
   //   strategy: "jwt",
   //   updateAge: 86400, // cada día
   // },
-  secret: process.env.NEXTAUTH_SECRET,
+
   // callbacks: {
   //   async signIn({ user, account, profile, email, credentials }) {
   //     if (!user?.role) {
@@ -147,4 +147,10 @@ export default NextAuth({
   //   },
   // },
   // adapter: MongoDBAdapter(clientPromise),
+  callbacks: {
+    async session({ session, token, user }: any) {
+      return session;
+    },
+  },
+  secret: process.env.SECRET,
 });

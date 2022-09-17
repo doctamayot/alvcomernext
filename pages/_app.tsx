@@ -9,7 +9,7 @@ import { lightTheme } from "../themes";
 import { SWRConfig } from "swr";
 import { UiProvider } from "../context";
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   return (
     <SessionProvider session={session}>
       <SWRConfig
