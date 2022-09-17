@@ -146,5 +146,5 @@ export default NextAuth({
   //     return session;
   //   },
   // },
-  adapter: MongoDBAdapter(clientPromise),
+  // adapter: MongoDBAdapter(clientPromise),
 });
