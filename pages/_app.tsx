@@ -1,4 +1,3 @@
-import { FC } from "react";
 //Next
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
@@ -10,11 +9,7 @@ import { lightTheme } from "../themes";
 import { SWRConfig } from "swr";
 import { UiProvider } from "../context";
 
-interface Props {
-  Component: any;
-  session: any;
-}
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <SWRConfig
