@@ -21,9 +21,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
     //   <UiProvider>
     //     <ThemeProvider theme={lightTheme}>
     //       <CssBaseline />
-    //<SessionProvider session={session}>
-    <Component {...pageProps} />
-    //</SessionProvider>
+    <SessionProvider session={session}>
+      <Component {...pageProps} />
+    </SessionProvider>
     //     </ThemeProvider>
     //   </UiProvider>
     // </SWRConfig>
