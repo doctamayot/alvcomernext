@@ -11,22 +11,22 @@ import { UiProvider } from "../context";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   return (
-    <SessionProvider session={session}>
-      <SWRConfig
-        value={{
-          // refreshInterval:500,
-          fetcher: (resource, init) =>
-            fetch(resource, init).then((res) => res.json()),
-        }}
-      >
-        <UiProvider>
-          <ThemeProvider theme={lightTheme}>
-            <CssBaseline />
+    <SWRConfig
+      value={{
+        // refreshInterval:500,
+        fetcher: (resource, init) =>
+          fetch(resource, init).then((res) => res.json()),
+      }}
+    >
+      <UiProvider>
+        <ThemeProvider theme={lightTheme}>
+          <CssBaseline />
+          <SessionProvider session={session}>
             <Component {...pageProps} />
-          </ThemeProvider>
-        </UiProvider>
-      </SWRConfig>
-    </SessionProvider>
+          </SessionProvider>
+        </ThemeProvider>
+      </UiProvider>
+    </SWRConfig>
   );
 }
 
