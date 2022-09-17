@@ -40,9 +40,9 @@ export const MenuLateral = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data: session, status }: any = useSession();
+  // const { data: session, status }: any = useSession();
 
-  console.log(status);
+  // console.log(status);
 
   const onSearchTerm = () => {
     if (searchTerm.trim().length === 0) return;
@@ -143,7 +143,7 @@ export const MenuLateral = () => {
             <ListItemText primary={"Placas de Identificación"} />
           </ListItem>
 
-          {session ? (
+          {/* {session ? (
             <ListItem button onClick={() => signOut()}>
               <ListItemIcon>
                 <LoginOutlined />
@@ -157,10 +157,10 @@ export const MenuLateral = () => {
               </ListItemIcon>
               <ListItemText primary={"Ingresar"} />
             </ListItem>
-          )}
+          )} */}
 
           {/* Admin */}
-          {session && session.user && session.user.role === "admin" ? (
+          {/* {session && session.user && session.user.role === "admin" ? (
             <>
               <Divider />
               <ListSubheader>Admin Panel</ListSubheader>
@@ -179,7 +179,7 @@ export const MenuLateral = () => {
                 <ListItemText primary={"Usuarios"} />
               </ListItem>
             </>
-          ) : null}
+          ) : null} */}
         </List>
       </Box>
     </Drawer>

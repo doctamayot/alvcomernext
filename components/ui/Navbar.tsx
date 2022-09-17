@@ -49,7 +49,7 @@ export const Navbar = () => {
     setAnchorEl(null);
   };
 
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
 
   const onSearchTerm = () => {
     if (searchTerm.trim().length === 0) return;
@@ -305,7 +305,7 @@ export const Navbar = () => {
           </IconButton>
         )}
 
-        {session ? (
+        {/* {session ? (
           <Box
             onClick={() => signOut()}
             sx={{ display: { xs: "none", md: "flex" } }}
@@ -348,7 +348,7 @@ export const Navbar = () => {
               </Typography>
             </Link>
           </NextLink>
-        )}
+        )} */}
 
         <Button
           onClick={toggleSideMenu}

@@ -98,9 +98,9 @@ import {
 
 function signIn({ providers }: any) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { data: session, status } = useSession();
+  // const { data: session, status } = useSession();
 
-  console.log(session);
+  // console.log(session);
 
   return (
     <>
